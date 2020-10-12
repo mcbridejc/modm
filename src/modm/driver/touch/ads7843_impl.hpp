@@ -62,6 +62,32 @@ modm::Ads7843<Spi, Cs, Int>::getAverage(uint16_t * buffer, int16_t & value)
 	return true;
 }
 
+uint16_t getBestTwo(uint16_t *temp)
+{
+	uint16_t value;
+	uint16_t m0 = abs(temp[0] - temp[1]);
+	uint16_t m1 = abs(temp[1] - temp[2]);
+	uint16_t m2 = abs(temp[2] - temp[0]);
+
+	if (m0 < m1)
+	{
+		if (m2 < m0) {
+			value = (temp[0] + temp[2]) / 2;
+		}
+		else {
+			value = (temp[0] + temp[1]) / 2;
+		}
+	}
+	else if (m2 < m1) {
+		value = (temp[0] + temp[2]) / 2;
+	}
+	else {
+		value = (temp[1] + temp[2]) / 2;
+	}
+
+	return value;
+}
+
 template <typename Spi, typename Cs, typename Int>
 bool
 modm::Ads7843<Spi, Cs, Int>::read(glcd::Point * point)
@@ -86,6 +112,32 @@ modm::Ads7843<Spi, Cs, Int>::read(glcd::Point * point)
 	}
 
 	return false;
+}
+
+template <typename Spi, typename Cs, typename Int>
+bool
+modm::Ads7843<Spi, Cs, Int>::testRead(glcd::Point * point)
+{
+	uint16_t z1 = readData(CHZ1);
+	uint16_t z2 = readData(CHZ2);
+	uint16_t z = z1 + 4095 - z2;
+	uint16_t xbuf[3];
+	uint16_t ybuf[3];
+
+	if(z > 72) {
+		xbuf[0] = readData(CHX);
+		ybuf[0] = readData(CHY);
+		xbuf[1] = readData(CHX);
+		ybuf[1] = readData(CHY);
+		xbuf[2] = readData(CHX);
+		ybuf[2] = readData(CHY);
+
+		point->x = (int16_t)getBestTwo(xbuf);
+		point->y = (int16_t)getBestTwo(ybuf);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 // ----------------------------------------------------------------------------

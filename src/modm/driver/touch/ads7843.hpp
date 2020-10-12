@@ -19,6 +19,8 @@
 #include <modm/ui/display/graphic_display.hpp>
 #include <modm/architecture/interface/delay.hpp>
 
+
+
 namespace modm
 {
 	/**
@@ -44,6 +46,9 @@ namespace modm
 		static bool
 		read(modm::glcd::Point * point);
 
+		static bool
+		testRead(modm::glcd::Point * point);
+
 		static inline uint16_t
 		readX()
 		{
@@ -59,6 +64,8 @@ namespace modm
 	private:
 		static const uint8_t CHX = 0x90;
 		static const uint8_t CHY = 0xd0;
+		static const uint8_t CHZ1 = 0xb0;
+		static const uint8_t CHZ2 = 0xc0;
 
 		static const uint16_t threshold = 2;
 
