@@ -154,8 +154,8 @@ class Ili9341 : public Interface, public modm::GraphicDisplay
 {
 	static_assert(BufferSize >= 16, "at least a small buffer is required");
 
-	static constexpr uint16_t Width = 240;
-	static constexpr uint16_t Height = 320;
+	static constexpr uint16_t Width = 320;
+	static constexpr uint16_t Height = 240;
 	using BatchHandle = typename Interface::BatchHandle;
 	using Command = ili9341::Command;
 public:
