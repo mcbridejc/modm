@@ -312,6 +312,13 @@ namespace modm
 				modm::accessor::Flash<uint8_t> data);
 
 		/**
+		 * Draw a bitmap with 16-bit 565 colored pixels.
+		 *
+		 * \p data is series of pixel color values
+		 */
+		virtual void drawBitmap(glcd::Point upperLeft, uint16_t width, uint16_t height, modm::accessor::Flash<uint16_t> data);
+
+		/**
 		 * Fill a rectangle.
 		 */
 		virtual void
