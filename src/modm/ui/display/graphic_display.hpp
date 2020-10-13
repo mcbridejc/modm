@@ -316,7 +316,7 @@ namespace modm
 		 *
 		 * \p data is series of pixel color values
 		 */
-		virtual void drawBitmap(glcd::Point upperLeft, uint16_t width, uint16_t height, modm::accessor::Flash<uint16_t> data);
+		virtual void drawBitmap(glcd::Point upperLeft, uint16_t width, uint16_t height, modm::accessor::Flash<uint8_t> data) = 0;
 
 		/**
 		 * Fill a rectangle.
